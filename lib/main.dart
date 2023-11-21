@@ -1,12 +1,10 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:babymilk/views/datababy/0-3.dart';
-import 'package:babymilk/views/datababy/1-6.dart';
-import 'package:babymilk/views/datababy/6-12.dart';
 import 'package:babymilk/views/datababy/addbaby.dart';
 import 'package:babymilk/views/datababy/addgrow.dart';
 import 'package:babymilk/views/datababy/overview.dart';
 import 'package:babymilk/views/home.dart';
+import 'package:babymilk/views/viewsbaby/viewbaby.dart';
 import 'package:babymilk/views/welcome.dart';
 import 'package:flutter/material.dart';
 
@@ -49,9 +47,7 @@ class MainApp extends StatelessWidget {
         '/overview': (context) => Overview(),
         '/addbaby': (context) => AddBaby(),
         '/savegrowth': (context) => SaveGrowth(),
-        '/zerotothird': (context) => Zerotothird(),
-        '/onetosix': (context) => OnetoSix(),
-        '/sixtotwelve': (context) => SixtoTwel(),
+        '/viewbaby': (context) => ViewBaby(),
       },
     );
   }

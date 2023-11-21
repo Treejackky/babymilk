@@ -1,3 +1,4 @@
+import 'package:babymilk/data/data.dart';
 import 'package:babymilk/database/database.dart';
 import 'package:babymilk/model/baby.dart';
 import 'package:babymilk/widget/custombutton.dart';
@@ -13,12 +14,15 @@ class Overview extends StatefulWidget {
 
 class _OverviewState extends State<Overview> {
   List<Baby> babies = [];
+  List<Baby> babies2 = [];
   int? _selectedRow;
   bool? isSwitched = false;
 
   @override
   void initState() {
     super.initState();
+    //print babies.id
+
     _loadBabies();
   }
 
@@ -42,9 +46,6 @@ class _OverviewState extends State<Overview> {
     final date = DateTime(year, month, day);
 
     final current = DateTime.now().toLocal();
-
-    print(date);
-    print(current);
 
     final ageDuration = current.difference(date);
 
@@ -85,9 +86,14 @@ class _OverviewState extends State<Overview> {
   }
 
   Future<void> _loadBabies() async {
-    final allBabies = await NotesDatabase.instance.getAllBabies();
+    final allBabies = await NotesDatabase.instance.getAllBabies2();
     setState(() {
       babies = allBabies;
+    });
+
+    final allBabies2 = await NotesDatabase.instance.getAllBabies3();
+    setState(() {
+      babies2 = allBabies2;
     });
   }
 
@@ -145,11 +151,11 @@ class _OverviewState extends State<Overview> {
                 MediaQuery.of(context).size.width * w_headers[1],
                 const Color.fromARGB(0, 255, 255, 255)),
             _buildContainer(
-                baby.weight ?? 'No Data',
+                babies2[index].weight ?? 'No Data',
                 MediaQuery.of(context).size.width * w_headers[2],
                 const Color.fromARGB(0, 255, 255, 255)),
             _buildContainer(
-                baby.height ?? 'No Data',
+                babies2[index].height ?? 'No Data',
                 MediaQuery.of(context).size.width * w_headers[3],
                 const Color.fromARGB(0, 255, 255, 255)),
           ],
@@ -183,6 +189,7 @@ class _OverviewState extends State<Overview> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
+            data['id_bb'] = '';
             Navigator.pushNamedAndRemoveUntil(
                 context, '/home', (route) => false);
           },
@@ -212,44 +219,74 @@ class _OverviewState extends State<Overview> {
               height: height * 0.2,
               width: width,
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   _selectedRow != null
-                      ? Container(
-                          width: width * 0.9,
-                          alignment: Alignment.center,
-                          child: CustomButton(
-                            color: Colors.red,
-                            text: 'ลบข้อมูลลูก',
-                            onPressed: () {
-                              if (_selectedRow != null) {
-                                showDialog(
-                                  context: context,
-                                  builder: (context) => AlertDialog(
-                                    title: Text('แจ้งเตือน'),
-                                    content: Text(
-                                        'คุณต้องการลบ ${babies[_selectedRow!].name} ใช่หรือไม่'),
-                                    actions: <Widget>[
-                                      TextButton(
-                                        child: Text('ตกลง'),
-                                        onPressed: () {
-                                          _deleteBaby(
-                                              babies[_selectedRow!].id!);
-                                          _selectedRow = null;
-                                          Navigator.of(context).pop();
-                                        },
-                                      ),
-                                      TextButton(
-                                        child: Text('ยกเลิก'),
-                                        onPressed: () {
-                                          Navigator.of(context).pop();
-                                        },
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              }
-                            },
+                      ? Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Container(
+                                width: width * 0.45,
+                                alignment: Alignment.center,
+                                child: CustomButton(
+                                    color: Colors.greenAccent,
+                                    text: 'อัพเดท ',
+                                    onPressed: () {
+                                      if (_selectedRow != null) {
+                                        Navigator.pushNamed(
+                                          context,
+                                          '/savegrowth',
+                                        );
+                                        data['name_baby'] =
+                                            babies[_selectedRow!].name;
+                                        data['gender'] =
+                                            babies[_selectedRow!].gender;
+                                        data['birthdate'] =
+                                            babies[_selectedRow!].birthdate;
+
+                                        setState(() {});
+                                      }
+                                    }),
+                              ),
+                              Container(
+                                width: width * 0.45,
+                                alignment: Alignment.center,
+                                child: CustomButton(
+                                  color: Colors.red,
+                                  text: 'ลบข้อมูล',
+                                  onPressed: () {
+                                    if (_selectedRow != null) {
+                                      showDialog(
+                                        context: context,
+                                        builder: (context) => AlertDialog(
+                                          title: Text('แจ้งเตือน'),
+                                          content: Text(
+                                              'คุณต้องการลบ ${babies[_selectedRow!].name} ใช่หรือไม่'),
+                                          actions: <Widget>[
+                                            TextButton(
+                                              child: Text('ตกลง'),
+                                              onPressed: () {
+                                                _deleteBaby(
+                                                    babies[_selectedRow!].id!);
+                                                _selectedRow = null;
+                                                Navigator.of(context).pop();
+                                              },
+                                            ),
+                                            TextButton(
+                                              child: Text('ยกเลิก'),
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                              },
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    }
+                                  },
+                                ),
+                              ),
+                            ],
                           ),
                         )
                       : Container(

@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:babymilk/data/data.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -21,7 +22,18 @@ class _HomeState extends State<Home> {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
-      appBar: AppBar(title: Text('')),
+      appBar: AppBar(
+        title: Text(''),
+        leading: GestureDetector(
+          onTap: () {
+            Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+          },
+          child: Icon(
+            Icons.arrow_back,
+            color: Colors.black,
+          ),
+        ),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
@@ -48,7 +60,7 @@ class _HomeState extends State<Home> {
                         Navigator.pushNamed(context, '/overview');
                       }
                       if (index == 1) {
-                        Navigator.pushNamed(context, '/savegrowth');
+                        Navigator.pushNamed(context, '/viewbaby');
                       }
                     },
                     child: Container(

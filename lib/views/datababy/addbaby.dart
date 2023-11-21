@@ -343,10 +343,9 @@ class _AddBabyState extends State<AddBaby> {
                             width: width * 0.9,
                             alignment: Alignment.center,
                             child: CustomButton(
-                              text: 'บันทึกข้อมูลลูก',
+                              text: 'บันทึกข้อมูล',
                               onPressed: () {
                                 _saveBaby();
-
                                 Navigator.pushNamedAndRemoveUntil(
                                     context, '/overview', (route) => false);
                               },
