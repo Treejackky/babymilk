@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "279097565152",
+    "project_id": "babymilk-1ec43",
+    "storage_bucket": "babymilk-1ec43.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:279097565152:android:34bb0929618df7a17c1585",
+        "android_client_info": {
+          "package_name": "com.example.babymilk"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCdBI6utNRNqbTQLDvnc2KdH5N7umP3vog"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
