@@ -80,7 +80,7 @@ class _OverviewState extends State<Overview> {
     }
   }
 
-  Future<void> _deleteBaby(int babyId) async {
+  Future<void> _deleteBaby(babyId) async {
     await NotesDatabase.instance.deleteBaby(babyId);
     _loadBabies();
   }
@@ -268,7 +268,8 @@ class _OverviewState extends State<Overview> {
                                               child: Text('ตกลง'),
                                               onPressed: () {
                                                 _deleteBaby(
-                                                    babies[_selectedRow!].id!);
+                                                    babies[_selectedRow!]
+                                                        .name!);
                                                 _selectedRow = null;
                                                 Navigator.of(context).pop();
                                               },

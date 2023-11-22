@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:babymilk/views/calender/calendar.dart';
 import 'package:babymilk/views/datababy/addbaby.dart';
 import 'package:babymilk/views/datababy/addgrow.dart';
 import 'package:babymilk/views/datababy/overview.dart';
@@ -48,6 +49,7 @@ class MainApp extends StatelessWidget {
         '/addbaby': (context) => AddBaby(),
         '/savegrowth': (context) => SaveGrowth(),
         '/viewbaby': (context) => ViewBaby(),
+        '/calendar': (context) => Calendar(),
       },
     );
   }

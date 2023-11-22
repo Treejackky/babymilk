@@ -328,7 +328,7 @@ class BabyHistoryScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'ประวัติน้อง${baby.name}}  ',
+                  'ประวัติน้อง ${baby.name}',
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
                 Text(
@@ -337,8 +337,6 @@ class BabyHistoryScreen extends StatelessWidget {
                 ),
               ],
             ),
-            Text(
-                'เกณฑ์ปัจจุบัน: \nน้ำหนัก: ${data['status_w']} \nส่วนสูง : ${data['status_h'] ?? ''}'),
             //fetch data from database with same name as baby.name
             FutureBuilder<List<Baby>>(
               future: NotesDatabase.instance.getAllBabies4('${baby.name}'),

@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_adjacent_string_concatenation, prefer_interpolation_to_compose_strings
+// ignore_for_file: prefer_adjacent_string_concatenation, prefer_interpolation_to_compose_strings, use_build_context_synchronously
 
 import 'package:babymilk/data/data.dart';
 import 'package:babymilk/database/database.dart';
@@ -113,11 +113,49 @@ class _SaveGrowthState extends State<SaveGrowth> {
     calculateAge(birthdate);
     setState(() {
       if (calculateAge(birthdate).contains('ปี')) {
-        //print('อิแก้');
+        var year = int.parse(calculateAge(birthdate).substring(0, 2));
+
+        if (year <= 2) {
+          data['yd'] = '1';
+          if (gender == 'ชาย') {
+            if (year == 1) {
+              haha(71.5, 79.7, 8.3, 11.0);
+            } else if (year == 2) {
+              haha(82.5, 91.5, 10.5, 14.4);
+            }
+          } else {
+            if (year == 1) {
+              haha(68.8, 78.9, 7.7, 10.5);
+            } else if (year == 2) {
+              haha(80.8, 89.9, 9.7, 13.7);
+            }
+          }
+        } else {
+          //show dialog
+          data['yd'] = '0';
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text('อายุเกิน 2 ปี'),
+                content: Text('ไม่สามารถคำนวนได้'),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text('ตกลง'),
+                  ),
+                ],
+              );
+            },
+          );
+        }
       } else {
         if (calculateAge(birthdate).contains('เดือน')) {
-          //print('อายุ 1 - 12 เดือน');
+          print('อายุ 1 - 12 เดือน' + calculateAge(birthdate));
           var date = int.parse(calculateAge(birthdate).substring(0, 2));
+          data['yd'] = '1';
           if (gender == 'ชาย') {
             if (date == 1) {
               haha(50.4, 56.2, 3.4, 4.7);
@@ -249,7 +287,18 @@ class _SaveGrowthState extends State<SaveGrowth> {
       },
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: AppBar(),
+        appBar: AppBar(
+            title: Text('บันทึกการเจริญเติบโต'),
+            leading: IconButton(
+              onPressed: () {
+                data['height'] = '';
+                data['weight'] = '';
+                data['status_w'] = '';
+                data['status_h'] = '';
+                Navigator.pop(context);
+              },
+              icon: Icon(Icons.arrow_back),
+            )),
         body: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
@@ -283,35 +332,6 @@ class _SaveGrowthState extends State<SaveGrowth> {
                       style: TextStyle(
                           fontSize: height * 0.03, fontWeight: FontWeight.bold),
                     ),
-                    //dropdown from database
-                    /* DropdownButton<Baby>(
-                      hint: Text('กรุณาเลือก'),
-                      value: _select == null
-                          ? data['id_bb'] != null &&
-                                  data['name_bb'] != null &&
-                                  data['id_bb'] != '' &&
-                                  data['name_bb'] != ''
-                              ? babies.firstWhere(
-                                  (element) => element.name == data['name_bb'])
-                              : null
-                          : babies
-                              .firstWhere((element) => element.name == _select),
-                      onChanged: (value) {
-                        setState(() {
-                          _select = value!.name;
-                          data['name_baby'] = value.name;
-                          data['gender'] = value.gender;
-                          data['birthdate'] = value.birthdate;
-                        });
-                        //print(_select);
-                      },
-                      items: babies.map((e) {
-                        return DropdownMenuItem<Baby>(
-                          value: e,
-                          child: Text(e.name!),
-                        );
-                      }).toList(),
-                    ),*/
                   ],
                 ),
               ),
@@ -418,15 +438,9 @@ class _SaveGrowthState extends State<SaveGrowth> {
               Text(''),
               CustomButton(
                   text: 'คำนวนและบันทึก',
-                  onPressed: () {
-                    calculatewh(data['birthdate'], data['gender']);
-                    print(data['name_baby']);
-                    print(data['birthdate']);
-                    print(data['gender']);
-                    print(data['status_h']);
-                    print(data['status_w']);
+                  onPressed: () async {
+                    await calculatewh(data['birthdate'], data['gender']);
                     _saveBaby();
-                    setState(() {});
                   })
             ],
           ),

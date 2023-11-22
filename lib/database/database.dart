@@ -33,7 +33,6 @@ class NotesDatabase {
         height TEXT,
         headCircumference TEXT,
         chestCircumference TEXT
-        status TEXT,
       )
     ''');
   }
@@ -98,13 +97,13 @@ class NotesDatabase {
   }
 
   //add delete baby
-  Future<int> deleteBaby(int id) async {
+  Future<int> deleteBaby(String name) async {
     final db = await instance.database;
 
     return await db.delete(
       'babies',
-      where: 'id = ?',
-      whereArgs: [id],
+      where: 'name = ?',
+      whereArgs: [name],
     );
   }
 

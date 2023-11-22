@@ -62,6 +62,9 @@ class _HomeState extends State<Home> {
                       if (index == 1) {
                         Navigator.pushNamed(context, '/viewbaby');
                       }
+                      if (index == 2) {
+                        Navigator.pushNamed(context, '/calendar');
+                      }
                     },
                     child: Container(
                       alignment: Alignment.center,

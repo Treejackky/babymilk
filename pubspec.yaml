@@ -12,6 +12,7 @@ dependencies:
   intl: ^0.18.1
   sqflite: ^2.3.0
   sqflite_common_ffi: ^2.3.0+4
+  table_calendar: ^3.0.9
 
 
 dev_dependencies:
